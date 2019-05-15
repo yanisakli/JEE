@@ -3,4 +3,4 @@ jdk: oraclejdk11
 dist: trusty
       
 script:
-  - mvn clean package
+  - mvn clean package -DskipTests
