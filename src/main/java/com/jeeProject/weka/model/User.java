@@ -12,15 +12,17 @@ public class User {
     private Long id;
     @NotBlank
     private String name;
+    @NotBlank
+    private String password;
 
     public User() {
         super();
     }
 
-    public User(Long id, String name) {
+    public User(String name, String password) {
         super();
-        this.id = id;
         this.name = name;
+        this.password = password;
 
     }
 
@@ -38,6 +40,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
