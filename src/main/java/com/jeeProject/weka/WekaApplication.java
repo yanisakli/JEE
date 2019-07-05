@@ -10,4 +10,5 @@ public class WekaApplication {
 		SpringApplication.run(WekaApplication.class, args);
 	}
 
+
 }
