@@ -1,6 +1,13 @@
 language: java
 jdk: oraclejdk11
 dist: trusty
-      
+
+addons:
+  sonarcloud:
+    organization: "yanisakli-github"
+    token:
+      secure: travis encrypt SOMEVAR="f9557ff8622a9c3aacdf714181420b6e3e4c7b75" # encrypted value of your token
+
 script:
-  - mvn clean package -DskipTests
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=yanisakli_JEE
