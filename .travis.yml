@@ -9,4 +9,4 @@ addons:
 
 script:
 - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=yanisakli_JEE -DskipTests
-- sonar-scanner -Dsonar.projectKey=yanisakli_JEE
+- sonar-scanner -Dsonar.projectKey=yanisakli_JEE -Dsonar.sources=. -Dsonar.java.binaries=.
