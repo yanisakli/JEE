@@ -7,9 +7,6 @@ addons:
     token:
       secure: "o/x9ecVzFX/sd8W29DH5PsoI6Ct8PjXVZL3rZJajUu+HspnrvRd/6YMnZfRBJLmU5pw6XxxgTrg1H8JXydCI8ChigOQ4uaNvp7nBxx/kfXZ0+p2pFUH2jpf0YXrF0fgidExU5g0VZh5bbqsuOVSawqRVl0sneFe8nmrIRfSPvfGNlgNCAzPJK3txgd2j6BvUvLoQnbs1KhpHayICckUAl5b1/N/AGKQJwnBU3sHoECllPQhUyNTWzkc4ppnhkbjMS7gxy/M3GWeXrzcLqh3iGeDmEYyTQ/sPAKRRiPwnBJrKRjkeGNzs4EbIpuMoWzJpIwG3G8mBwSRnB8YZemWhGw8p4ye1bTdj8lV/m+YjbwffyJq9gFdQXmXyJgXZfxYGy/y04oPRcDm6P5qw4DUe23pAKvfB2s8yx59lOdL0e0ymrG8t7ELPoLh79/dnBA2aNYd7plGpjR3t5ebsgRhGb9pWGPrlyh5YBnQP3dWLpKBGLc3K3YKOVKDR8wCyL652hPu7QzRQr5B/2EX/eFNCwBH01/QKJujjexh5iRy6k7glpNfdgGcyk+KTMR72qzPzNsszNOK44hnqlnflRF/Ea3/Xv2Y6vnePHcP8pAU/2DAUTbwYmPrJZJV2LyqLGZxM2XM3yE9STpSJyxPO5lQEtp2V5vyjJLyzunkaIXZ1AdI="
 
-before_install:
--chmod a+x ./mvnw
-
 script:
 - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=yanisakli_JEE -DskipTests
 - sonar-scanner -Dsonar.projectKey=yanisakli_JEE -Dsonar.sources=. -Dsonar.java.binaries=.
