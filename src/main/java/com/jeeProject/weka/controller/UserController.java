@@ -39,23 +39,23 @@ public class UserController {
     @PostMapping("/auth")
     public User authentificate(@Valid @RequestBody User user) {
         List<User> listUser = userRepository.findAll();
-        for (User user1 : listUser)
+        for (User oneuser : listUser)
         {
-            if(user1.getName().equals(user.getName()) && BCrypt.checkpw(user.getPassword(), user1.getPassword()))
+            if(oneuser.getName().equals(user.getName()) && BCrypt.checkpw(user.getPassword(), oneuser.getPassword()))
             {
-                return user1;
+                return oneuser;
             }
         }
         return  null;
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/user/{id}")
     public User getUsersById(@PathVariable(value = "id") Long userId)
     {
         return userRepository.findById(userId).get();
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/user/{id}")
     public User updateUser(@PathVariable(value = "id") Long userId, @Valid @RequestBody User userDetails)
     {
         User user = userRepository.findById(userId).get();
