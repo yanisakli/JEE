@@ -75,11 +75,21 @@ public class ModeleController {
         return modeleRepository.save(modele);
     }
 
-    @GetMapping("/modeledownload/{id}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable(value = "id") Long modeleID, HttpServletRequest request) {
-        // Load file as Resource
+    @PostMapping("/modeletrain/{id}")
+    public Modele uploadFile(@PathVariable(value = "id") Long modeleID) {
         Modele modele = modeleRepository.findById(modeleID).get();
-        Resource resource = storageService.loadFileAsResource(modele.getFile());
+        String f = modele.getFile();
+
+
+
+        return modeleRepository.save(modele);
+    }
+
+
+        @GetMapping("/modeledownload/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+        // Load file as Resource
+        Resource resource = storageService.loadFileAsResource(fileName);
         // Try to determine file's content type
         String contentType = null;
         try {
@@ -97,5 +107,6 @@ public class ModeleController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
+
 
 }
