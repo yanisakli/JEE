@@ -3,6 +3,7 @@ package com.jeeProject.weka.controller;
 
 import com.jeeProject.weka.model.User;
 import com.jeeProject.weka.repository.UserRepository;
+import com.jeeProject.weka.service.TokenHandlerService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+    private TokenHandlerService randomToken = new TokenHandlerService();
 
 
     /**
@@ -28,6 +30,8 @@ public class UserController {
     public User createUser(@Valid @RequestBody User user) {
 
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+        randomToken.setToken();
+        user.setToken(randomToken.getToken());
         return userRepository.save(user);
     }
 

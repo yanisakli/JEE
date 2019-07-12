@@ -2,6 +2,7 @@ package com.jeeProject.weka.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 
 @Entity
@@ -14,6 +15,9 @@ public class User {
     private String name;
     @NotBlank
     private String password;
+    private String token;
+
+    private Date token_expiration;
 
     public User() {
         super();
@@ -45,4 +49,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getToken() { return token; }
+
+    public void setToken(String token) { this.token = token; }
+
+    public Date getToken_expiration() { return token_expiration; }
+
+    public void setToken_expiration(Date token_expiration) { this.token_expiration = token_expiration; }
 }
