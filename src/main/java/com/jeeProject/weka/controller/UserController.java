@@ -3,6 +3,7 @@ package com.jeeProject.weka.controller;
 
 import com.jeeProject.weka.exception.UserBadRequestException;
 import com.jeeProject.weka.exception.UserNotFoundException;
+import com.jeeProject.weka.exception.UserUnauthorizedExecption;
 import com.jeeProject.weka.model.User;
 import com.jeeProject.weka.repository.UserRepository;
 import com.jeeProject.weka.service.TokenHandlerService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -38,6 +40,7 @@ public class UserController {
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         randomToken.setToken();
         user.setToken(randomToken.getToken());
+        user.setToken_expiration(new Timestamp(System.currentTimeMillis() + 36000000));
         return userRepository.save(user);
     }
 
@@ -58,6 +61,8 @@ public class UserController {
         if (auth.getName().isEmpty()) {
             throw new UserNotFoundException("User haven't been found");
         }
+        user.setToken_expiration(new Timestamp(System.currentTimeMillis() + 36000000));
+        userRepository.save(auth);
         return auth;
     }
 
@@ -67,7 +72,9 @@ public class UserController {
         return userRepository.findById(userId).get();
     }
 
-    private User getUserWithToken(String token) {
+
+    @GetMapping("/userToken")
+    public User getUserWithToken(@RequestHeader("x-access-token") String token) {
         List<User> list = userRepository.findAll();
         User user = new User();
         if (token.isEmpty()) {
@@ -91,16 +98,22 @@ public class UserController {
     @PutMapping("/user/update")
     public User updateUser(@RequestHeader("x-access-token") String token, @Valid @RequestBody User newValue) {
         User user = getUserWithToken(token);
-        if (!newValue.getName().isEmpty() && !newValue.getPassword().isEmpty()) {
-            user.setName(newValue.getName());
-            user.setPassword(BCrypt.hashpw(newValue.getPassword(), BCrypt.gensalt()));
+        Timestamp currentTImestamp = new Timestamp(System.currentTimeMillis());
+        if (currentTImestamp.after(user.getToken_expiration())) {
+            throw new UserUnauthorizedExecption("Token invalid, you have to re-authentified yourself !");
         }
+        user.setName(newValue.getName());
+        user.setPassword(BCrypt.hashpw(newValue.getPassword(), BCrypt.gensalt()));
         return userRepository.save(user);
     }
 
     @DeleteMapping("/user/delete")
     public boolean deleteUser(@RequestHeader("x-access-token") String token) {
         User user = getUserWithToken(token);
+        Timestamp currentTImestamp = new Timestamp(System.currentTimeMillis());
+        if (currentTImestamp.after(user.getToken_expiration())) {
+            throw new UserUnauthorizedExecption("Token invalid, you have to re-authentified yourself !");
+        }
         userRepository.delete(user);
         return true;
     }
