@@ -8,8 +8,8 @@ import weka.filters.unsupervised.attribute.Normalize;
 
 public class WekaApplication {
 
-	public static final String DATASETPATH = "C:/Users/darck/OneDrive/Documents/ESGI/JEE/data/iris.2D.arff";
-	public static final String MODElPATH = "C:/Users/darck/OneDrive/Documents/ESGI/JEE/output/model.bin";
+	public static final String DATASETPATH = "C:/Users/Shadow/Documents/ESGI/JEE/data/iris.2D.arff";
+	public static final String MODElPATH = "C:/Users/Shadow/Documents/ESGI/JEE/output/model.bin";
 
 	public static void main(String[] args) throws Exception {
 
