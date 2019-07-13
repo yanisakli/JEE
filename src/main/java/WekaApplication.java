@@ -7,7 +7,7 @@ import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Normalize;
 
 public class WekaApplication {
-	
+
 	public static final String DATASETPATH = "C:/Users/Shadow/Documents/ESGI/JEE/data/iris.2D.arff";
 	public static final String MODElPATH = "C:/Users/Shadow/Documents/ESGI/JEE/output/model.bin";
 
