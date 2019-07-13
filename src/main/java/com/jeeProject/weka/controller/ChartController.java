@@ -1,5 +1,6 @@
 package com.jeeProject.weka.controller;
 
+import com.jeeProject.weka.model.Graph;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
@@ -7,6 +8,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.image.WritableImage;
 import javafx.stage.Stage;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
@@ -15,6 +17,13 @@ import java.io.IOException;
 
 @RestController
 public class GraphController {
+
+
+    @PostMapping("/graph")
+    public Graph createGraph()
+    {
+
+    }
 
     public void start(Stage stage) {
         stage.setTitle("Line Chart Sample");
