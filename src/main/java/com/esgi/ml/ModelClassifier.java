@@ -12,11 +12,6 @@ import weka.core.SerializationHelper;
 
 /**
  * This is a classifier for iris.2D.arff dataset
- * @author Taha Emara
- * Website: http://www.emaraic.com
- * Email  : taha@emaraic.com
- * Created on: Jul 1, 2017
- * Github link: https://github.com/emara-geek/weka-example
  */
 public class ModelClassifier {
 

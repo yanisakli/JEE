@@ -6,14 +6,6 @@ import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Normalize;
 
-/**
- *
- * @author Taha Emara 
- * Website: http://www.emaraic.com 
- * Email : taha@emaraic.com
- * Created on: Jul 1, 2017
- * Github link: https://github.com/emara-geek/weka-example
- */
 public class WekaApplication {
 
 	public static final String DATASETPATH = "/data/iris.2D.arff";
