@@ -18,7 +18,13 @@ public class Modele {
     private String file;
     @NotNull
     private long idUser;
-    private String reponse;
+    private double correct_instances;
+
+
+    private double incorrect_instances;
+    private int nb_instance;
+    private double kappa_stat;
+
 
     public Modele() {
         super();
@@ -58,7 +64,21 @@ public class Modele {
         this.idUser = idUser;
     }
 
-    public String getReponse() { return reponse; }
+    public double getCorrect_instances() { return correct_instances; }
 
-    public void setReponse(String reponse) { this.reponse = reponse; }
+    public void setCorrect_instances(double correct_instances) { this.correct_instances = correct_instances; }
+
+    public double getIncorrect_instances() { return incorrect_instances; }
+
+    public void setIncorrect_instances(double incorrect_instances) { this.incorrect_instances = incorrect_instances; }
+
+    public int getNb_instance() { return nb_instance; }
+
+    public void setNb_instance(int nb_instance) { this.nb_instance = nb_instance; }
+
+    public double getKappa_stat() { return kappa_stat; }
+
+    public void setKappa_stat(double kappa_stat) { this.kappa_stat = kappa_stat; }
+
+
 }
