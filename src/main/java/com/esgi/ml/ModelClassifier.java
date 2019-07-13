@@ -10,6 +10,9 @@ import weka.core.DenseInstance;
 import weka.core.Instances;
 import weka.core.SerializationHelper;
 
+/**
+ * This is a classifier for iris.2D.arff dataset
+ */
 public class ModelClassifier {
 
     private Attribute petallength;
