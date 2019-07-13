@@ -7,6 +7,9 @@ import com.jeeProject.weka.repository.ChartRepository;
 import com.jeeProject.weka.repository.ModeleRepository;
 import com.jeeProject.weka.service.ChartHandlerService;
 import com.jeeProject.weka.service.FileStorageService;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.WritableImage;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -14,9 +17,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -38,9 +44,10 @@ public class ChartController {
     }
 
     @PutMapping("/lineChart/{id}")
-    public Chart lineChart(@PathVariable(value = "id") Long chartID, @Valid @RequestBody long modeleID) {
+    public Chart lineChart(@PathVariable(value = "id") Long chartID) {
         List<Chart> charts = chartRepository.findAll();
-        Modele modele = modeleRepository.findById(modeleID).get();
+        List<Modele> models = modeleRepository.findAll();
+        chartHandlerService.setMode("LineChart");
         Chart chart = new Chart();
         for (Chart chart1 : charts) {
             if (chartID.equals(chart1.getId())) {
@@ -50,7 +57,23 @@ public class ChartController {
         if (chart.getName().isEmpty()) {
             throw new NotFoundException("Chart hasn't been found");
         }
-
+        if(models.isEmpty()){
+            throw new NotFoundException("Models haven't been found");
+        }
+        chartHandlerService.setListValued(new HashMap<>());
+        for (Modele modele: models)
+        {
+            chartHandlerService.getListValued().put("",modele.getKappa_stat());
+        }
+        chartHandlerService.start(new Stage());
+        WritableImage image = chartHandlerService.getFinalScene().snapshot(null);
+        File file = new File("scene"+System.currentTimeMillis()+".png");
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            chart.setFile(file.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return chart;
     }
 

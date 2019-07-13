@@ -22,8 +22,10 @@ import java.util.Map;
 
 public class ChartHandlerService extends Application {
 
-    public static String mode = "";
-    public static HashMap<String,Double> listValued = new HashMap<>();
+
+    private String mode = "";
+    private HashMap<String,Double> listValued = new HashMap<>();
+    private Scene finalScene;
 
     public void start(Stage stage) {
         switch (mode) {
@@ -38,7 +40,7 @@ public class ChartHandlerService extends Application {
 
 
     private void pieChart(Stage stage) {
-        Scene scene = new Scene(new Group());
+        finalScene = new Scene(new Group());
         stage.setWidth(500);
         stage.setHeight(500);
         ObservableList<PieChart.Data> pieChartData =
@@ -50,8 +52,7 @@ public class ChartHandlerService extends Application {
         }
         PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Evaluation on 30 instances");
-        ((Group) scene.getRoot()).getChildren().add(chart);
-        saveAsPng(scene, "../image.png");
+        ((Group) finalScene.getRoot()).getChildren().add(chart);
         Platform.exit();
     }
 
@@ -75,8 +76,7 @@ public class ChartHandlerService extends Application {
         lineChart.getData().addAll(series);
         series.setName("Kappa stat");
         lineChart.setAnimated(false);
-        Scene scene = new Scene(lineChart, 500, 500);
-        saveAsPng(scene, "../image.png");
+        finalScene = new Scene(lineChart, 500, 500);
         Platform.exit();
     }
 
@@ -91,4 +91,16 @@ public class ChartHandlerService extends Application {
             e.printStackTrace();
         }
     }
+
+    public String getMode() { return mode; }
+
+    public void setMode(String mode) { this.mode = mode; }
+
+    public HashMap<String, Double> getListValued() { return listValued; }
+
+    public void setListValued(HashMap<String, Double> listValued) { this.listValued = listValued; }
+
+    public Scene getFinalScene() { return finalScene; }
+
+    public void setFinalScene(Scene finalScene) { this.finalScene = finalScene; }
 }
