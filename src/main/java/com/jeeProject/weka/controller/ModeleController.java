@@ -27,7 +27,6 @@ public class ModeleController {
     private FileStorageService storageService;
 
 
-
     @PostMapping("/modele")
     public Modele createModele(@Valid @RequestBody Modele modele) {
         return modeleRepository.save(modele);
@@ -36,8 +35,7 @@ public class ModeleController {
     @GetMapping("/modeles")
     public List getAllModeles() {
         List<Modele> modeles = modeleRepository.findAll();
-        if(modeles.isEmpty())
-        {
+        if (modeles.isEmpty()) {
             throw new NotFoundException("There is no model to show !");
         }
         return modeles;
@@ -87,12 +85,11 @@ public class ModeleController {
         String f = modele.getFile();
 
 
-
         return modeleRepository.save(modele);
     }
 
 
-        @GetMapping("/modeledownload/{fileName:.+}")
+    @GetMapping("/modeledownload/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource
         Resource resource = storageService.loadFileAsResource(fileName);
@@ -104,7 +101,7 @@ public class ModeleController {
             e.printStackTrace();
         }
         // Fallback to the default content type if type could not be determined
-        if(contentType == null) {
+        if (contentType == null) {
             contentType = "application/octet-stream";
         }
 

@@ -17,20 +17,21 @@ import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChartHandlerService extends Application {
 
     public static String mode = "";
+    public static HashMap<String,Double> listValued = new HashMap<>();
 
-    public void start(Stage stage)
-    {
-        switch (mode)
-        {
+    public void start(Stage stage) {
+        switch (mode) {
             case "PieChart":
                 pieChart(stage);
                 break;
             case "LineChart":
-                lineChart(stage);
+                lineChart();
                 break;
         }
     }
@@ -44,6 +45,9 @@ public class ChartHandlerService extends Application {
                 FXCollections.observableArrayList(
                         new PieChart.Data("Correctly Instance", 96.6667),
                         new PieChart.Data("Incorrectly Instances", 3.3333));
+        for (Map.Entry<String, Double> value : listValued.entrySet()) {
+            pieChartData.add(new PieChart.Data(value.getKey(), value.getValue()));
+        }
         PieChart chart = new PieChart(pieChartData);
         chart.setTitle("Evaluation on 30 instances");
         ((Group) scene.getRoot()).getChildren().add(chart);
@@ -52,8 +56,7 @@ public class ChartHandlerService extends Application {
     }
 
 
-
-    private void lineChart(Stage stage) {
+    private void lineChart() {
         //defining the axes
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -64,10 +67,11 @@ public class ChartHandlerService extends Application {
         //defining a series
         XYChart.Series series = new XYChart.Series();
         //populating the series with data
-        series.getData().add(new XYChart.Data(1, 0.9497));
-        series.getData().add(new XYChart.Data(2, 1.9497));
-        series.getData().add(new XYChart.Data(3, 0.9497));
-        series.getData().add(new XYChart.Data(4, 2.9497));
+        int compteur = 0;
+        for (Map.Entry<String, Double> value : listValued.entrySet()) {
+            series.getData().add(new XYChart.Data(compteur, value.getValue()));
+            compteur ++;
+        }
         lineChart.getData().addAll(series);
         series.setName("Kappa stat");
         lineChart.setAnimated(false);
