@@ -1,9 +1,9 @@
 package com.jeeProject.weka.controller;
 
 
-import com.jeeProject.weka.exception.UserBadRequestException;
-import com.jeeProject.weka.exception.UserNotFoundException;
-import com.jeeProject.weka.exception.UserUnauthorizedExecption;
+import com.jeeProject.weka.exception.BadRequestException;
+import com.jeeProject.weka.exception.NotFoundException;
+import com.jeeProject.weka.exception.UnauthorizedExecption;
 import com.jeeProject.weka.model.User;
 import com.jeeProject.weka.repository.UserRepository;
 import com.jeeProject.weka.service.TokenHandlerService;
@@ -28,12 +28,12 @@ public class UserController {
     public User createUser(@Valid @RequestBody User user) {
         List<User> listUser = userRepository.findAll();
         if (user.getName().isEmpty() || user.getPassword().isEmpty()) {
-            throw new UserBadRequestException("One of both champ is missing");
+            throw new BadRequestException("One of both champ is missing");
         }
         if (!listUser.isEmpty()) {
             for (User oneUser : listUser) {
                 if (user.getName().equals(oneUser.getName())) {
-                    throw new UserBadRequestException("User already exist");
+                    throw new BadRequestException("User already exist");
                 }
             }
         }
@@ -56,10 +56,10 @@ public class UserController {
                 }
             }
         } else {
-            throw new UserNotFoundException("User haven't been found");
+            throw new NotFoundException("User haven't been found");
         }
         if (auth.getName().isEmpty()) {
-            throw new UserNotFoundException("User haven't been found");
+            throw new NotFoundException("User haven't been found");
         }
         user.setToken_expiration(new Timestamp(System.currentTimeMillis() + 36000000));
         userRepository.save(auth);
@@ -78,7 +78,7 @@ public class UserController {
         List<User> list = userRepository.findAll();
         User user = new User();
         if (token.isEmpty()) {
-            throw new UserBadRequestException("Token is missing !");
+            throw new BadRequestException("Token is missing !");
         }
         if (!list.isEmpty()) {
             for (User oneuser : list) {
@@ -87,10 +87,10 @@ public class UserController {
                 }
             }
         } else {
-            throw new UserNotFoundException("User haven't been found");
+            throw new NotFoundException("User haven't been found");
         }
         if (user.getName().isEmpty()) {
-            throw new UserNotFoundException("User haven't been found");
+            throw new NotFoundException("User haven't been found");
         }
         return user;
     }
@@ -100,7 +100,7 @@ public class UserController {
         User user = getUserWithToken(token);
         Timestamp currentTImestamp = new Timestamp(System.currentTimeMillis());
         if (currentTImestamp.after(user.getToken_expiration())) {
-            throw new UserUnauthorizedExecption("Token invalid, you have to re-authentified yourself !");
+            throw new UnauthorizedExecption("Token invalid, you have to re-authentified yourself !");
         }
         user.setName(newValue.getName());
         user.setPassword(BCrypt.hashpw(newValue.getPassword(), BCrypt.gensalt()));
@@ -112,7 +112,7 @@ public class UserController {
         User user = getUserWithToken(token);
         Timestamp currentTImestamp = new Timestamp(System.currentTimeMillis());
         if (currentTImestamp.after(user.getToken_expiration())) {
-            throw new UserUnauthorizedExecption("Token invalid, you have to re-authentified yourself !");
+            throw new UnauthorizedExecption("Token invalid, you have to re-authentified yourself !");
         }
         userRepository.delete(user);
         return true;

@@ -1,5 +1,6 @@
 package com.jeeProject.weka.controller;
 
+import com.jeeProject.weka.exception.NotFoundException;
 import com.jeeProject.weka.model.Modele;
 import com.jeeProject.weka.repository.ModeleRepository;
 import com.jeeProject.weka.service.FileStorageService;
@@ -34,7 +35,12 @@ public class ModeleController {
 
     @GetMapping("/modeles")
     public List getAllModeles() {
-        return modeleRepository.findAll();
+        List<Modele> modeles = modeleRepository.findAll();
+        if(modeles.isEmpty())
+        {
+            throw new NotFoundException("There is no model to show !");
+        }
+        return modeles;
     }
 
     @GetMapping("/modele/{id}")
