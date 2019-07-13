@@ -63,6 +63,7 @@
             <version>2.3.0</version>
         </dependency>
         <dependency>
+<<<<<<< HEAD
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator-jboss-vfs</artifactId>
             <version>0.1.0</version>
@@ -76,6 +77,12 @@
             <groupId>nz.ac.waikato.cms.weka</groupId>
             <artifactId>weka-stable</artifactId>
             <version>3.8.0</version>
+=======
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>weka-stable</artifactId>
+            <version>3.8.0</version>
+
+>>>>>>> 3b0737c4a040f12709032ae4cff8a9745b5e94a8
         </dependency>
     </dependencies>
 
