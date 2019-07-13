@@ -8,23 +8,22 @@ import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "graph")
-public class Graph {
+public class Chart {
     @Id
     @GeneratedValue
     private Long id;
     @NotBlank
     private String name;
     @NotBlank
-    private String password;
+    private String file;
 
-    public Graph() {
+    public Chart() {
         super();
     }
 
-    public Graph(String name, String password) {
+    public Chart(String name) {
         super();
         this.name = name;
-        this.password = password;
 
     }
 
@@ -36,19 +35,11 @@ public class Graph {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getFile() { return file; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setFile(String file) { this.file = file; }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getName() { return name; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setName(String name) { this.name = name; }
 }
