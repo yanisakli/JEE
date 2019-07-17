@@ -1,6 +1,5 @@
 package com.jeeProject.weka.service;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,7 +19,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChartHandlerService extends Application {
+public class ChartHandlerService {
 
 
     private String mode = "";
@@ -40,6 +39,7 @@ public class ChartHandlerService extends Application {
 
 
     private void pieChart(Stage stage) {
+
         finalScene = new Scene(new Group());
         stage.setWidth(500);
         stage.setHeight(500);

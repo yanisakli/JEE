@@ -68,6 +68,16 @@
             <version>0.1.0</version>
         </dependency>
         <dependency>
+            <groupId>org.knowm.xchart</groupId>
+            <artifactId>xchart-parent</artifactId>
+            <version>3.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx</artifactId>
+            <version>11</version>
+        </dependency>
+        <dependency>
             <groupId>org.jfree</groupId>
             <artifactId>jfreechart</artifactId>
             <version>1.0.19</version>
