@@ -14,7 +14,6 @@ public class Chart {
     private Long id;
     @NotBlank
     private String name;
-    @NotBlank
     private String file;
 
     public Chart() {

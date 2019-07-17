@@ -39,7 +39,6 @@ public class ChartHandlerService {
 
 
     private void pieChart(Stage stage) {
-
         finalScene = new Scene(new Group());
         stage.setWidth(500);
         stage.setHeight(500);
