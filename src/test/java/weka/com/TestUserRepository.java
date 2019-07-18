@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import weka.WekaApplicationTests;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
-@ContextConfiguration(classes=WekaApplication.class)
+@ContextConfiguration(classes= WekaApplication.class)
 public class TestUserRepository {
     @Autowired
     private MockMvc mvc;
