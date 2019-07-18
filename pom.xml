@@ -97,7 +97,6 @@
             <version>3.8.0</version>
         </dependency>
         <dependency>
-<<<<<<< HEAD
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>11.0.1</version>
@@ -116,11 +115,16 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>11.0.1</version>
-=======
+        </dependency>
+        <dependency>
             <groupId>nz.ac.waikato.cms.weka</groupId>
             <artifactId>weka-stable</artifactId>
             <version>3.8.0</version>
->>>>>>> One last merge error yet to be fixed, an import of weka.repository.UserRepository
+        </dependency>
+        <dependency>
+            <groupId>nz.ac.waikato.cms.weka</groupId>
+            <artifactId>weka-stable</artifactId>
+            <version>3.8.0</version>
         </dependency>
     </dependencies>
 
