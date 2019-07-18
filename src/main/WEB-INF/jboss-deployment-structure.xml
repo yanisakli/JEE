@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 
 <jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">
@@ -6,6 +5,7 @@
     <deployment>
 
         <dependencies>
+            <module name="com.sun.prism.es2.X11GLFactory"/>
 
             <system export="true">
 
@@ -54,6 +54,8 @@
                     <path name="javafx/scene/control"/>
 
                     <path name="javafx/scene/control/cell"/>
+
+                    <path name="javafx/scene/control/label"/>
 
                     <path name="javafx/scene/effect"/>
 

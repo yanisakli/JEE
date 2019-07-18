@@ -9,7 +9,6 @@ import com.jeeProject.weka.service.ChartHandlerService;
 import com.jeeProject.weka.service.FileStorageService;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.WritableImage;
-import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +34,6 @@ public class ChartController {
     private ModeleRepository modeleRepository;
     @Autowired
     private FileStorageService storageService;
-    private ChartHandlerService chartHandlerService = new ChartHandlerService();
 
 
     @PostMapping("/chart")
@@ -47,6 +45,7 @@ public class ChartController {
     public Chart lineChart(@PathVariable(value = "id") Long chartID) {
         List<Chart> charts = chartRepository.findAll();
         List<Modele> models = modeleRepository.findAll();
+        ChartHandlerService chartHandlerService = new ChartHandlerService();
         chartHandlerService.setMode("LineChart");
         Chart chart = new Chart();
         for (Chart chart1 : charts) {
@@ -65,7 +64,7 @@ public class ChartController {
         {
             chartHandlerService.getListValued().put("",modele.getKappa_stat());
         }
-        chartHandlerService.start(new Stage());
+        chartHandlerService.start();
         WritableImage image = chartHandlerService.getFinalScene().snapshot(null);
         File file = new File("scene"+System.currentTimeMillis()+".png");
         try {
