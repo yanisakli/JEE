@@ -99,7 +99,6 @@ public class TestUserRepository {
     public void testAuthWithWrongCredential()throws Exception{
         String password = BCrypt.hashpw("barto",BCrypt.gensalt());
         User barto = new User("barto", password);
-
         String content = "{\"name\":\"barto\", \"password\":\"ee\"}";
         List<User> allUsers = Arrays.asList(barto);
         Mockito.when(userRepository.findAll()).thenReturn(allUsers);
