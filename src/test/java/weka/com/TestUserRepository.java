@@ -6,6 +6,7 @@ import com.jeeProject.weka.model.User;
 import com.jeeProject.weka.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mindrot.jbcrypt.BCrypt;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -64,6 +65,49 @@ public class TestUserRepository {
                 .content(content))
                 .andExpect(status().isBadRequest()).andReturn();
         System.out.println(result.getResponse());
+    }
+
+    @Test
+    public void testAuthWithGoodCredential()throws Exception{
+       String password = BCrypt.hashpw("barto",BCrypt.gensalt());
+        User barto = new User("barto", password);
+
+        String content = "{\"name\":\"barto\", \"password\":\"barto\"}";
+        List<User> allUsers = Arrays.asList(barto);
+        Mockito.when(userRepository.findAll()).thenReturn(allUsers);
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/auth")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isOk()).andReturn();
+        System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void checkAuthToken()throws Exception{
+        String password = BCrypt.hashpw("barto",BCrypt.gensalt());
+        User barto = new User("barto", password);
+        String content = "{\"name\":\"barto\", \"password\":\"barto\"}";
+        List<User> allUsers = Arrays.asList(barto);
+        Mockito.when(userRepository.findAll()).thenReturn(allUsers);
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/auth")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content)).andReturn();
+        System.out.println(result.getResponse());
+    }
+
+    @Test
+    public void testAuthWithWrongCredential()throws Exception{
+        String password = BCrypt.hashpw("barto",BCrypt.gensalt());
+        User barto = new User("barto", password);
+
+        String content = "{\"name\":\"barto\", \"password\":\"ee\"}";
+        List<User> allUsers = Arrays.asList(barto);
+        Mockito.when(userRepository.findAll()).thenReturn(allUsers);
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/auth")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isNotFound()).andReturn();
+        System.out.println(result.getResponse().getContentAsString());
     }
 
 
