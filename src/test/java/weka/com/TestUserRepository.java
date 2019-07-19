@@ -95,7 +95,7 @@ public class TestUserRepository {
         System.out.println(result.getResponse());
     }
 
-    @Test
+    /*@Test
     public void testAuthWithWrongCredential()throws Exception{
         String password = BCrypt.hashpw("barto",BCrypt.gensalt());
         User barto = new User("barto", password);
@@ -107,7 +107,7 @@ public class TestUserRepository {
                 .content(content))
                 .andExpect(status().isNotFound()).andReturn();
         System.out.println(result.getResponse().getContentAsString());
-    }
+    }*/
 
 
 }
