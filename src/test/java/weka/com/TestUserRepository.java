@@ -2,11 +2,14 @@ package weka.com;
 
 import com.jeeProject.weka.WekaApplication;
 import com.jeeProject.weka.controller.UserController;
+import com.jeeProject.weka.exception.UnauthorizedExecption;
 import com.jeeProject.weka.model.User;
 import com.jeeProject.weka.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mindrot.jbcrypt.BCrypt;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -20,8 +23,15 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import weka.WekaApplicationTests;
 
+import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -95,7 +105,7 @@ public class TestUserRepository {
         System.out.println(result.getResponse());
     }
 
-    /*@Test
+    @Test
     public void testAuthWithWrongCredential()throws Exception{
         String password = BCrypt.hashpw("barto",BCrypt.gensalt());
         User barto = new User("barto", password);
@@ -107,7 +117,70 @@ public class TestUserRepository {
                 .content(content))
                 .andExpect(status().isNotFound()).andReturn();
         System.out.println(result.getResponse().getContentAsString());
+    }
+
+    @Test
+    public void deleteUserShouldWork() throws Exception {
+        User user = new User("barto","barto");
+        user.setToken("token");
+        user.setToken_expiration(new Timestamp(System.currentTimeMillis() + 36000000));
+        List<User> allUsers = Arrays.asList(user);
+        Mockito.when(userRepository.findAll()).thenReturn(allUsers);
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete("/user/delete")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("x-access-token", "token"))
+                .andExpect(status().isOk()).andReturn();
+    }
+    @Test
+    public void deleteUserShouldCallDeleteFunction() throws Exception {
+        User user = new User("barto","barto");
+        user.setToken("token");
+        user.setToken_expiration(new Timestamp(System.currentTimeMillis() + 36000000));
+        List<User> allUsers = Arrays.asList(user);
+        Mockito.when(userRepository.findAll()).thenReturn(allUsers);
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete("/user/delete")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("x-access-token", "token"))
+                .andReturn();
+        Mockito.verify(userRepository).delete(user);
+    }
+
+    @Test
+    public void deleteUserShouldNotWorkWithoutToken() throws Exception {
+        User user = new User("barto","barto");
+        user.setToken("token");
+        user.setToken_expiration(new Timestamp(System.currentTimeMillis() + 36000000));
+        List<User> allUsers = Arrays.asList(user);
+        Mockito.when(userRepository.findAll()).thenReturn(allUsers);
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete("/user/delete")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest()).andReturn();
+    }
+
+    /*
+    @PutMapping("/user/update")
+    public User updateUser(@RequestHeader("x-access-token") String token, @Valid @RequestBody User newValue) {
+        User user = getUserWithToken(token);
+        Timestamp currentTImestamp = new Timestamp(System.currentTimeMillis());
+        if (currentTImestamp.after(user.getToken_expiration())) {
+            throw new UnauthorizedExecption("Token invalid, you have to re-authentified yourself !");
+        }
+        user.setName(newValue.getName());
+        user.setPassword(BCrypt.hashpw(newValue.getPassword(), BCrypt.gensalt()));
+        return userRepository.save(user);
     }*/
 
-
+    @Test
+    public void updateShouldWork() throws Exception {
+        User user = new User("barto","barto");
+        user.setToken("token");
+        String content = "{\"name\":\"batard\", \"password\":\"oui\"}";
+        user.setToken_expiration(new Timestamp(System.currentTimeMillis() + 36000000));
+        List<User> allUsers = Arrays.asList(user);
+        Mockito.when(userRepository.findAll()).thenReturn(allUsers);
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.delete("/user/delete")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest()).andReturn();
+    }
 }

@@ -79,6 +79,7 @@ public class UserController {
     public User getUserWithToken(@RequestHeader("x-access-token") String token) {
         List<User> list = userRepository.findAll();
         User user = new User();
+        boolean userExist = false;
         if (token.isEmpty()) {
             throw new BadRequestException("Token is missing !");
         }
@@ -86,12 +87,13 @@ public class UserController {
             for (User oneuser : list) {
                 if (oneuser.getToken().equals(token)) {
                     user = oneuser;
+                    userExist = true ;
                 }
             }
         } else {
             throw new NotFoundException("User haven't been found");
         }
-        if (user.getName().isEmpty()) {
+        if (!userExist) {
             throw new NotFoundException("User haven't been found");
         }
         return user;
