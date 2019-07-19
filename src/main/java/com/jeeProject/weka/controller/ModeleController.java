@@ -4,6 +4,7 @@ import com.jeeProject.weka.exception.NotFoundException;
 import com.jeeProject.weka.model.Modele;
 import com.jeeProject.weka.repository.ModeleRepository;
 import com.jeeProject.weka.service.FileStorageService;
+import com.jeeProject.weka.service.WekaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,9 @@ import java.util.List;
 
 @RestController
 public class ModeleController {
+
+    public static final String DATASETPATH = "C:/Users/Shadow/Documents/ESGI/JEE/data/iris.2D.arff";
+    public static final String MODElPATH = "C:/Users/Shadow/Documents/ESGI/JEE/output/model.bin";
 
     @Autowired
     private ModeleRepository modeleRepository;
@@ -112,4 +116,14 @@ public class ModeleController {
     }
 
 
+    @PutMapping("/modele/{id}")
+    public Modele putModelResult(@PathVariable(value = "id") Long modeleID) throws Exception {
+        Modele modele = modeleRepository.findById(modeleID).get();
+
+        WekaService wekaService = new WekaService(modele);
+
+        modele = wekaService.ExecuteModel(modele);
+
+        return modeleRepository.save(modele);
+    }
 }

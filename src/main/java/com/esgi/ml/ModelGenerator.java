@@ -2,6 +2,7 @@ package com.esgi.ml;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import weka.classifiers.Classifier;
 import weka.classifiers.evaluation.Evaluation;
 import weka.classifiers.functions.MultilayerPerceptron;
@@ -10,6 +11,11 @@ import weka.core.SerializationHelper;
 import weka.core.converters.ConverterUtils.DataSource;
 
 public class ModelGenerator {
+
+    public double numInstances;
+    public double correct;
+    public double incorrect;
+    public double kappaStatistic;
 
     public Instances loadDataset(String path) {
         Instances dataset = null;
@@ -73,10 +79,25 @@ public class ModelGenerator {
 
     public String evaluateModel(Classifier model, Instances traindataset, Instances testdataset) {
         Evaluation eval = null;
+        Evaluation evalBeta = null;
         try {
             // Evaluate classifier with test dataset
             eval = new Evaluation(traindataset);
             eval.evaluateModel(model, testdataset);
+
+            evalBeta = new Evaluation(traindataset);
+            evalBeta.evaluateModel(model, testdataset);
+            evalBeta.toClassDetailsString();
+
+            System.out.println("Number of instances: " + evalBeta.numInstances());
+            System.out.println("Evaluation correct: " + evalBeta.correct());
+            System.out.println("Evaluation incorrect: " + evalBeta.incorrect());
+            System.out.println("Kappa statistic: " + evalBeta.kappa());
+
+            this.numInstances = evalBeta.numInstances();
+            this.correct = evalBeta.correct();
+            this.incorrect = evalBeta.incorrect();
+            this.kappaStatistic = evalBeta.kappa();
         } catch (Exception ex) {
             Logger.getLogger(ModelGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }
