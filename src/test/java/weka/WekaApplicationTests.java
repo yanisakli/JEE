@@ -1,4 +1,4 @@
-package com.jeeProject.weka;
+package weka;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
