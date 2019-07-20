@@ -47,7 +47,7 @@ public class UserController {
     @PostMapping("/auth")
     public User authentificate(@Valid @RequestBody User user) {
         List<User> listUser = userRepository.findAll();
-        User auth = new User();
+        User auth = null;
         if (!listUser.isEmpty()) {
             for (User oneuser : listUser) {
                 if (oneuser.getName().equals(user.getName()) && BCrypt.checkpw(user.getPassword(), oneuser.getPassword())) {
@@ -58,7 +58,7 @@ public class UserController {
         } else {
             throw new NotFoundException("User haven't been found");
         }
-        if (auth.getName().isEmpty()) {
+        if (auth == null) {
             throw new NotFoundException("User haven't been found");
         }
         user.setToken_expiration(new Timestamp(System.currentTimeMillis() + 36000000));
