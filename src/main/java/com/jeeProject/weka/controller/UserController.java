@@ -48,17 +48,19 @@ public class UserController {
     public User authentificate(@Valid @RequestBody User user) {
         List<User> listUser = userRepository.findAll();
         User auth = null;
+        boolean isAuth = false;
         if (!listUser.isEmpty()) {
             for (User oneuser : listUser) {
                 if (oneuser.getName().equals(user.getName()) && BCrypt.checkpw(user.getPassword(), oneuser.getPassword())) {
                     auth = oneuser;
+                    isAuth = true;
                     break;
                 }
             }
         } else {
             throw new NotFoundException("User haven't been found");
         }
-        if (auth == null) {
+        if (!isAuth) {
             throw new NotFoundException("User haven't been found");
         }
         user.setToken_expiration(new Timestamp(System.currentTimeMillis() + 36000000));
@@ -77,6 +79,7 @@ public class UserController {
     public User getUserWithToken(@RequestHeader("x-access-token") String token) {
         List<User> list = userRepository.findAll();
         User user = new User();
+        boolean userExist = false;
         if (token.isEmpty()) {
             throw new BadRequestException("Token is missing !");
         }
@@ -84,12 +87,13 @@ public class UserController {
             for (User oneuser : list) {
                 if (oneuser.getToken().equals(token)) {
                     user = oneuser;
+                    userExist = true ;
                 }
             }
         } else {
             throw new NotFoundException("User haven't been found");
         }
-        if (user.getName().isEmpty()) {
+        if (!userExist) {
             throw new NotFoundException("User haven't been found");
         }
         return user;

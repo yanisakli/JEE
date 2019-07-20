@@ -4,6 +4,7 @@ import com.jeeProject.weka.exception.NotFoundException;
 import com.jeeProject.weka.model.Modele;
 import com.jeeProject.weka.repository.ModeleRepository;
 import com.jeeProject.weka.service.FileStorageService;
+import com.jeeProject.weka.service.WekaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -109,6 +110,17 @@ public class ModeleController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+    @PutMapping("/modeleResult/{id}")
+    public Modele putModelResult(@PathVariable(value = "id") Long modeleID) throws Exception {
+        Modele modele = modeleRepository.findById(modeleID).get();
+
+        WekaService wekaService = new WekaService(modele);
+
+        modele = wekaService.ExecuteModel(modele);
+
+        return modeleRepository.save(modele);
     }
 
 
