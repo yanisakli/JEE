@@ -11,7 +11,6 @@ import weka.filters.unsupervised.attribute.Normalize;
 
 public class WekaService {
 
-    private final String DATASETPATH = "C:/Users/Shadow/Documents/ESGI/JEE/data/iris.2D.arff";
     private final String MODELPATH = "C:/Users/Shadow/Documents/ESGI/JEE/output/model.bin";
 
     private ModelGenerator modelGenerator;
@@ -69,6 +68,7 @@ public class WekaService {
         modele.setNb_instance((int) this.getModelGenerator().getNumInstances());
         modele.setCorrect_instances(this.getModelGenerator().getCorrect());
         modele.setIncorrect_instances(this.getModelGenerator().getIncorrect());
+        modele.setKappa_stat(this.getModelGenerator().getKappaStatistic());
 
         System.out.println("\n The class name for the instance with \n\r" +
                 "petallength = 1.6 and petalwidth =0.2 is  " + this.getClassname());

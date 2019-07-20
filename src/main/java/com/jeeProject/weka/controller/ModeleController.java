@@ -150,20 +150,6 @@ public class ModeleController {
     }
 
     /**
-     * @param modeleID
-     * @return
-     */
-    @PostMapping("/modeletrain/{id}")
-    public Modele uploadFile(@PathVariable(value = "id") Long modeleID) {
-        Modele modele = modeleRepository.findById(modeleID).get();
-        String f = modele.getFile();
-
-
-        return modeleRepository.save(modele);
-    }
-
-
-    /**
      * @param fileName
      * @param request
      * @return
