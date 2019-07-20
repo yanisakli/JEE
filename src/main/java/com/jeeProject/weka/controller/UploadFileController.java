@@ -3,9 +3,7 @@ package com.jeeProject.weka.controller;
 import com.jeeProject.weka.model.MyUploadForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,14 +16,7 @@ import java.util.List;
 @Controller
 public class UploadFileController {
 
-    @RequestMapping(value = "/")
-    public String homePage() {
-
-        return "index";
-    }
-
-    // GET: Show upload form page.
-    @RequestMapping(value = "/uploadOneFile", method = RequestMethod.GET)
+    @GetMapping("/uploadOneFile")
     public String uploadOneFileHandler(Model model) {
 
         MyUploadForm myUploadForm = new MyUploadForm();
@@ -34,8 +25,7 @@ public class UploadFileController {
         return "uploadOneFile";
     }
 
-    // POST: Do Upload
-    @RequestMapping(value = "/uploadOneFile", method = RequestMethod.POST)
+    @PostMapping("/uploadOneFile")
     public String uploadOneFileHandlerPOST(HttpServletRequest request, //
                                            Model model, //
                                            @ModelAttribute("myUploadForm") MyUploadForm myUploadForm) {

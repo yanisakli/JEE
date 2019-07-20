@@ -24,6 +24,16 @@ public class UserController {
     private TokenHandlerService randomToken = new TokenHandlerService();
 
 
+    /**
+     * Create user like :
+     * {
+     * "name" : "name",
+     * "password" : "password"
+     * }
+     *
+     * @param user
+     * @return user created with token and token expiration
+     */
     @PostMapping("/user")
     public User createUser(@Valid @RequestBody User user) {
         List<User> listUser = userRepository.findAll();
@@ -44,6 +54,16 @@ public class UserController {
         return userRepository.save(user);
     }
 
+    /**
+     * Authentificate user like :
+     * {
+     * "name" : "name",
+     * "password" : "password"
+     * }
+     *
+     * @param user
+     * @return
+     */
     @PostMapping("/auth")
     public User authentificate(@Valid @RequestBody User user) {
         List<User> listUser = userRepository.findAll();
@@ -69,12 +89,28 @@ public class UserController {
     }
 
 
+    /**
+     * Get user according to id in path like :
+     * weka/user/1
+     *
+     * @param userId
+     * @return
+     */
     @GetMapping("/user/{id}")
     public User getUserById(@PathVariable(value = "id") Long userId) {
         return userRepository.findById(userId).get();
     }
 
 
+    /**
+     * get user according to token in header like :
+     * headers :
+     * key : x-acess-token
+     * value : token
+     *
+     * @param token
+     * @return
+     */
     @GetMapping("/userToken")
     public User getUserWithToken(@RequestHeader("x-access-token") String token) {
         List<User> list = userRepository.findAll();
@@ -87,7 +123,7 @@ public class UserController {
             for (User oneuser : list) {
                 if (oneuser.getToken().equals(token)) {
                     user = oneuser;
-                    userExist = true ;
+                    userExist = true;
                 }
             }
         } else {
@@ -99,6 +135,20 @@ public class UserController {
         return user;
     }
 
+    /**
+     * update user according to access token like :
+     * headers :
+     * key : x-acess-token
+     * value : token
+     * {
+     * "name" : "machin",
+     * "password" : truc"
+     * }
+     *
+     * @param token
+     * @param newValue
+     * @return
+     */
     @PutMapping("/user/update")
     public User updateUser(@RequestHeader("x-access-token") String token, @Valid @RequestBody User newValue) {
         User user = getUserWithToken(token);
@@ -111,6 +161,15 @@ public class UserController {
         return userRepository.save(user);
     }
 
+
+    /**
+     * delete user according to access token like :
+     * headers :
+     * key : x-acess-token
+     *
+     * @param token
+     * @return
+     */
     @DeleteMapping("/user/delete")
     public boolean deleteUser(@RequestHeader("x-access-token") String token) {
         User user = getUserWithToken(token);

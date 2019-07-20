@@ -21,6 +21,15 @@ public class ChartController {
     private ModeleRepository modeleRepository;
 
 
+    /**
+     * Display Pie chart according to the id in path like :
+     * /weka/displayPieChart/1
+     * throw exception if model isn't found
+     *
+     * @param model
+     * @param modeleID
+     * @return
+     */
     @GetMapping("/displayPieChart/{id}")
     public String pieChart(Model model, @PathVariable(value = "id") Long modeleID) {
         Modele modele = modeleRepository.findById(modeleID).get();
@@ -33,6 +42,13 @@ public class ChartController {
     }
 
 
+    /**
+     * Display Bar Graph according to all kappa stat in db
+     * throw exception if model isn't found
+     *
+     * @param model
+     * @return
+     */
     @GetMapping("/displayBarGraph")
     public String barGraph(Model model) {
         Map<String, Double> kappaMap = new LinkedHashMap<>();
