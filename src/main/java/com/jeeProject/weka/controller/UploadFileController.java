@@ -80,13 +80,13 @@ public class UploadFileController {
                 }
             }
         }
-        System.out.println("tamere");
         CommandeService commandeService = new CommandeService();
         String output = null;
         if (serverFile != null)
             output = commandeService.getOutput(serverFile);
         CatnDog catnDog = new CatnDog(description);
         catnDog.setOutput(output);
+        catnDogRepository.save(catnDog);
         model.addAttribute("description", description);
         model.addAttribute("uploadedFiles", uploadedFiles);
         model.addAttribute("failedFiles", failedFiles);

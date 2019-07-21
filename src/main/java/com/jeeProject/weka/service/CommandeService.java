@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 
 public class CommandeService {
 
-
     public String getOutput(File output) {
 
         String s;
@@ -15,11 +14,8 @@ public class CommandeService {
 
         try {
 
-            System.out.println("voila");
-            String[] cmd = {"python", "/home/ubuntu/fileload/load.py", output.getAbsolutePath()};
-            // run the Unix "ps -ef" command
             // using the Runtime exec method:
-            Process p = Runtime.getRuntime().exec(cmd);
+            Process p = Runtime.getRuntime().exec("python3 /home/ubuntu/fileload/load.py");
 
             BufferedReader stdInput = new BufferedReader(new
                     InputStreamReader(p.getInputStream()));
@@ -36,9 +32,10 @@ public class CommandeService {
 
             System.out.println(result);
 
-            System.exit(0);
+            //            System.exit(0);
         } catch (IOException e) {
-            System.exit(-1);
+            //System.exit(-1);
+            e.printStackTrace();
         }
         return result.toString();
     }
