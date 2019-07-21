@@ -15,7 +15,8 @@ public class CommandeService {
 
         try {
 
-            String[] cmd = {"python", "load.py", output.getAbsolutePath()};
+            System.out.println("voila");
+            String[] cmd = {"python", "/home/ubuntu/fileload/load.py", output.getAbsolutePath()};
             // run the Unix "ps -ef" command
             // using the Runtime exec method:
             Process p = Runtime.getRuntime().exec(cmd);
@@ -32,6 +33,8 @@ public class CommandeService {
 
             // read any errors from the attempted command
             while ((s = stdError.readLine()) != null) result.append(s);
+
+            System.out.println(result);
 
             System.exit(0);
         } catch (IOException e) {

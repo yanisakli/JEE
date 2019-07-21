@@ -80,6 +80,7 @@ public class UploadFileController {
                 }
             }
         }
+        System.out.println("tamere");
         CommandeService commandeService = new CommandeService();
         String output = null;
         if (serverFile != null)
