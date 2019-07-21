@@ -1,4 +1,4 @@
-package weka.com;
+package integration.controller;
 
 import com.jeeProject.weka.WekaApplication;
 import com.jeeProject.weka.controller.UserController;
@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
 @ContextConfiguration(classes= WekaApplication.class)
-public class TestUserRepository {
+public class TestUserController {
     @Autowired
     private MockMvc mvc;
 
