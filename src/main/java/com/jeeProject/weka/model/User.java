@@ -1,7 +1,11 @@
 package com.jeeProject.weka.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import java.sql.Timestamp;
 
 
 @Entity
@@ -14,6 +18,10 @@ public class User {
     private String name;
     @NotBlank
     private String password;
+    private String token;
+
+    private Timestamp token_expiration;
+
 
     public User() {
         super();
@@ -24,14 +32,11 @@ public class User {
         this.name = name;
         this.password = password;
 
+
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -49,4 +54,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getToken() { return token; }
+
+    public void setToken(String token) { this.token = token; }
+
+    public Timestamp getToken_expiration() { return token_expiration; }
+
+    public void setToken_expiration(Timestamp token_expiration) { this.token_expiration = token_expiration; }
 }

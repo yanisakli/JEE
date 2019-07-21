@@ -1,0 +1,8 @@
+com.jeeProject.weka
+com.jeeProject.weka.controller
+com.jeeProject.weka.exception
+com.jeeProject.weka.model
+com.jeeProject.weka.property
+com.jeeProject.weka.repository
+com.jeeProject.weka.service
+com.jeeProject.weka.stockage
