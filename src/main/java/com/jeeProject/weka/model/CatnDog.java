@@ -17,6 +17,7 @@ public class CatnDog {
     private Long id;
     @NotBlank
     private String description;
+    @NotBlank
     private String output;
 
     public Long getId() {
@@ -47,9 +48,10 @@ public class CatnDog {
         super();
     }
 
-    public CatnDog(String description) {
+    public CatnDog(String description, String output) {
         super();
         this.description = description;
+        this.output = output;
     }
 
 

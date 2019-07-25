@@ -84,8 +84,7 @@ public class UploadFileController {
         String output = null;
         if (serverFile != null)
             output = commandeService.getOutput(serverFile);
-        CatnDog catnDog = new CatnDog(description);
-        catnDog.setOutput(output);
+        CatnDog catnDog = new CatnDog(description, output);
         catnDogRepository.save(catnDog);
         model.addAttribute("description", description);
         model.addAttribute("uploadedFiles", uploadedFiles);
