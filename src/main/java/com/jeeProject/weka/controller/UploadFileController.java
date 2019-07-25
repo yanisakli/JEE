@@ -66,11 +66,10 @@ public class UploadFileController {
             String name = fileData.getOriginalFilename();
 
             if (name != null && name.length() > 0) {
-                try {
+                serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + name);
+                try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));) {
                     // Create the file at server
-                    serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + name);
 
-                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
                     stream.write(fileData.getBytes());
                     stream.close();
                     //
